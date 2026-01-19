@@ -1,0 +1,60 @@
+<section class="lifecycle">
+  <header>
+    <h2>Component Lifecycle Hooks</h2>
+    <p>Watch hooks fire as inputs change, views init, and child toggles.</p>
+  </header>
+
+  <div class="controls">
+    <button type="button" (click)="updateChildLabel()">Update Child Input</button>
+    <button type="button" (click)="toggleChild()">Toggle Child</button>
+    <button type="button" class="ghost" (click)="clearLogs()">Clear Logs</button>
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <h3>Parent + Child</h3>
+      <p>
+        Parent updates a child <code>@Input</code> and you can destroy/recreate the
+        child to see <code>ngOnDestroy</code>.
+      </p>
+
+      <app-child
+        *ngIf="showChild"
+        [label]="childLabel"
+      ></app-child>
+    </article>
+
+    <article class="card">
+      <h3>Lifecycle Log</h3>
+      <app-log-panel [title]="'Parent Logs'" [entries]="logs"></app-log-panel>
+    </article>
+  </div>
+
+  <article class="card">
+    <h3>Content Projection</h3>
+    <p>Slot projection (<code>ng-content</code>) with header/body/footer.</p>
+    <div class="controls">
+      <button type="button" (click)="toggleFooter()">Toggle Footer Slot</button>
+      <button type="button" class="ghost" (click)="toggleNote()">Toggle Template Note</button>
+    </div>
+    <app-projector>
+      <h4 slot="header">Projected Header</h4>
+      <ng-container>
+        <p>This content is projected from the parent into the middle slot.</p>
+        <p>Grouped by <code>ng-container</code> (no extra DOM).</p>
+      </ng-container>
+
+      <ng-container *ngIf="showProjectedFooter; else noFooter">
+        <div slot="footer">Projected Footer</div>
+      </ng-container>
+      <ng-template #noFooter>
+        <div slot="footer">Footer removed (ng-template fallback)</div>
+      </ng-template>
+
+      <ng-template #noteTemplate>
+        <p class="note">Note rendered via <code>ngTemplateOutlet</code>.</p>
+      </ng-template>
+      <ng-container *ngIf="showNote" [ngTemplateOutlet]="noteTemplate"></ng-container>
+    </app-projector>
+  </article>
+</section>

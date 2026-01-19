@@ -1,0 +1,11 @@
+<header class="top-bar">
+  <div class="brand">RxJS Demo</div>
+  <nav class="main-nav">
+    <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/operators" routerLinkActive="active">Operators</a>
+  </nav>
+</header>
+
+<main class="page">
+  <router-outlet></router-outlet>
+</main>

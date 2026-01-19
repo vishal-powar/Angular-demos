@@ -1,0 +1,11 @@
+<header class="top-bar">
+  <div class="brand">Angular Lifecycle Demo</div>
+  <nav class="main-nav">
+    <a routerLink="/lifecycle" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Lifecycle</a>
+    <a routerLink="/docs" routerLinkActive="active">App Anatomy</a>
+  </nav>
+</header>
+
+<main class="page">
+  <router-outlet></router-outlet>
+</main>

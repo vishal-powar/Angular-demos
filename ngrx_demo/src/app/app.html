@@ -1,0 +1,12 @@
+<header class="top-bar">
+  <div class="brand">NgRx Demo</div>
+  <nav class="main-nav">
+    <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/tasks" routerLinkActive="active">Tasks Store</a>
+    <a routerLink="/books" routerLinkActive="active">Books Entity</a>
+  </nav>
+</header>
+
+<main class="page">
+  <router-outlet></router-outlet>
+</main>

@@ -1,0 +1,14 @@
+<div class="list">
+  <p>Pick a user to see resolved data or edit with a deactivation guard.</p>
+  <ul>
+    @for (user of users; track user.id) {
+      <li>
+        <span>{{ user.name }} · {{ user.role }}</span>
+        <div class="links">
+          <a [routerLink]="[user.id]">Details</a>
+          <a [routerLink]="[user.id, 'edit']">Edit</a>
+        </div>
+      </li>
+    }
+  </ul>
+</div>

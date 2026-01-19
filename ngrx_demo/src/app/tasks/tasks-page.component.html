@@ -1,0 +1,46 @@
+<section class="tasks">
+  <header>
+    <h2>Tasks Store</h2>
+    <p>NgRx store with actions, reducer, selectors, and effects.</p>
+  </header>
+
+  <div class="form">
+    <input
+      type="text"
+      placeholder="New task title"
+      [(ngModel)]="formModel.title"
+    />
+    <select [(ngModel)]="formModel.priority">
+      @for (priority of priorities; track priority) {
+        <option [value]="priority">{{ priority | titlecase }}</option>
+      }
+    </select>
+    <button type="button" (click)="add()">Add Task</button>
+  </div>
+
+  @if (loading$ | async) {
+    <p class="status">Loading tasks...</p>
+  }
+
+  @if (error$ | async; as error) {
+    <p class="status error">{{ error }}</p>
+  }
+
+  <ul>
+    @for (task of tasks$ | async; track task.id) {
+      <li [ngClass]="{ done: task.completed }">
+        <label>
+          <input type="checkbox" [checked]="task.completed" (change)="toggle(task.id)" />
+          <span>{{ task.title }}</span>
+        </label>
+        <span class="meta">{{ task.priority }} · {{ task.createdAt | date:'short' }}</span>
+      </li>
+    }
+  </ul>
+
+  <footer>
+    <span>Remaining: {{ remainingCount$ | async }}</span>
+    <span>Completed: {{ completedCount$ | async }}</span>
+    <button type="button" (click)="clearCompleted()">Clear Completed</button>
+  </footer>
+</section>

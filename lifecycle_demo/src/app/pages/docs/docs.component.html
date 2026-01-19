@@ -1,0 +1,94 @@
+<section class="docs">
+  <header>
+    <h2>Angular App Anatomy</h2>
+    <p>Key files and how Angular bootstraps and renders your app.</p>
+  </header>
+
+  <article class="card">
+    <h3>Important Files</h3>
+    <ul>
+      <li><strong>package.json</strong> - npm scripts and dependency versions used by the app.</li>
+      <li><strong>angular.json</strong> - workspace + build targets (assets, styles, optimization).</li>
+      <li><strong>src/main.ts</strong> - application entry; bootstraps root component.</li>
+      <li><strong>src/app/app.config.ts</strong> - providers (router, HTTP, interceptors).</li>
+      <li><strong>src/app/app.routes.ts</strong> - routing table and lazy-loaded routes.</li>
+      <li><strong>src/app/app.html</strong> - root app shell template (layout + outlet).</li>
+      <li><strong>src/styles.scss</strong> - global styles applied to the whole app.</li>
+    </ul>
+  </article>
+
+  <article class="card">
+    <h3>Bootstrap Flow Diagram</h3>
+    <pre class="diagram">main.ts
+  -> bootstrapApplication(App, appConfig)
+    -> providers from app.config.ts
+    -> router reads app.routes.ts
+    -> renders app.html
+    -> components render views + hooks run</pre>
+  </article>
+
+  <article class="card">
+    <h3>Lifecycle Phases (High Level)</h3>
+    <pre class="diagram">constructor
+  -> ngOnChanges (inputs)
+  -> ngOnInit
+  -> ngDoCheck
+  -> ngAfterContentInit / Checked
+  -> ngAfterViewInit / Checked
+  -> ngOnDestroy</pre>
+  </article>
+
+  <article class="card">
+    <h3>Content Projection Diagram</h3>
+    <pre class="diagram">Parent template
+  -> &lt;app-projector&gt;
+     [header slot]
+     [default slot]
+     [footer slot]
+
+Projector template
+  -> &lt;ng-content select='[slot=&quot;header&quot;]'&gt;
+  -> &lt;ng-content&gt;
+  -> &lt;ng-content select='[slot=&quot;footer&quot;]'&gt;</pre>
+  </article>
+
+  <article class="card">
+    <h3>ng-content Variations</h3>
+    <pre class="diagram">&lt;app-projector&gt;
+  &lt;h4 slot="header"&gt;Header&lt;/h4&gt;
+  &lt;p&gt;Default slot content&lt;/p&gt;
+  &lt;div slot="footer"&gt;Footer&lt;/div&gt;
+&lt;/app-projector&gt;</pre>
+    <p>
+      Use <code>select</code> to target elements by attribute or CSS selector.
+      Default <code>ng-content</code> captures anything not matched by a selector.
+    </p>
+  </article>
+
+  <article class="card">
+    <h3>ng-container Variations</h3>
+    <pre class="diagram">&lt;ng-container *ngIf="show"&gt;
+  &lt;h4&gt;Grouped without extra DOM&lt;/h4&gt;
+  &lt;p&gt;Multiple nodes projected together.&lt;/p&gt;
+&lt;/ng-container&gt;</pre>
+    <p>
+      <code>ng-container</code> groups nodes or hosts structural directives
+      without rendering an extra element in the DOM.
+    </p>
+  </article>
+
+  <article class="card">
+    <h3>ng-template Variations</h3>
+    <pre class="diagram">&lt;ng-template #note&gt;
+  &lt;p&gt;Template block&lt;/p&gt;
+&lt;/ng-template&gt;
+
+&lt;ng-container [ngTemplateOutlet]="note"&gt;&lt;/ng-container&gt;
+
+&lt;ng-container *ngIf="show; else note"&gt;&lt;/ng-container&gt;</pre>
+    <p>
+      <code>ng-template</code> is a lazy block. Render it later with
+      <code>ngTemplateOutlet</code> or use it as an <code>else</code> block.
+    </p>
+  </article>
+</section>

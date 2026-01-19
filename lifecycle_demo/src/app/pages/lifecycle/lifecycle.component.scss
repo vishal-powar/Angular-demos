@@ -1,0 +1,38 @@
+.lifecycle {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e1e1e1;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+}
+
+.ghost {
+  background: #f6f7fb;
+}
+
+.note {
+  background: #f6f7fb;
+  border: 1px dashed #c7c7d8;
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem 0 0;
+}

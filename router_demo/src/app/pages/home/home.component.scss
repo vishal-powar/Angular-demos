@@ -1,0 +1,22 @@
+.home {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+article {
+  border: 1px solid #d9d9d9;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #ffffff;
+}
+
+a {
+  display: inline-block;
+  margin-top: 0.75rem;
+}

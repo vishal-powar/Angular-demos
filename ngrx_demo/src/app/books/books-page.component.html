@@ -1,0 +1,39 @@
+<section class="books">
+  <header>
+    <h2>Books Entity Module</h2>
+    <p>Feature state powered by NgRx Entity adapter.</p>
+  </header>
+
+  <div class="form">
+    <input type="text" placeholder="Title" [(ngModel)]="formModel.title" />
+    <input type="text" placeholder="Author" [(ngModel)]="formModel.author" />
+    <button type="button" (click)="add()">Add Book</button>
+  </div>
+
+  @if (loading$ | async) {
+    <p class="status">Loading books...</p>
+  }
+
+  @if (error$ | async; as error) {
+    <p class="status error">{{ error }}</p>
+  }
+
+  <ul>
+    @for (book of books$ | async; track book.id) {
+      <li>
+        <div>
+          <strong>{{ book.title }}</strong>
+          <span class="author">{{ book.author }}</span>
+        </div>
+        <button type="button" (click)="toggle(book.id)">
+          {{ book.available ? 'Mark Unavailable' : 'Mark Available' }}
+        </button>
+      </li>
+    }
+  </ul>
+
+  <footer>
+    <span>Total: {{ total$ | async }}</span>
+    <span>Available: {{ available$ | async }}</span>
+  </footer>
+</section>

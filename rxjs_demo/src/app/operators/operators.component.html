@@ -1,0 +1,365 @@
+<section class="operators">
+  <header>
+    <h2>RxJS Operators Playground</h2>
+    <p>Each card showcases a common interview operator with logs.</p>
+  </header>
+
+  <div class="grid">
+    <article class="card">
+      <header class="card-header">
+        <h3>forkJoin</h3>
+        <button type="button" (click)="runForkJoin()">Run forkJoin</button>
+      </header>
+      <p>Wait for all API calls to finish, then emit one combined result.</p>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">A ---a|
+B -----b|
+C --c|
+forkJoin ----(abc)|</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">forkJoin(&#123;
+  user: getUser(),
+  orders: getOrders(),
+  stats: getStats()
+&#125;).subscribe(...)</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of forkJoinLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-header">
+        <h3>switchMap</h3>
+        <button type="button" (click)="runSwitchMapDemo()">Simulate rapid changes</button>
+      </header>
+      <p>Switch to latest request and cancel the previous ones.</p>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">Input: 1---2---3|
+Req:   ---1x
+          ---2x
+             ----3|</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">userId$
+  .pipe(switchMap(id => api(id)))</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of switchMapLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-header">
+        <h3>concatMap</h3>
+        <button type="button" (click)="queueTasks()">Queue tasks</button>
+      </header>
+      <p>Process each request sequentially in order.</p>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">Input: A---B---C|
+Out:   A---B---C|</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">tasks$
+  .pipe(concatMap(t => save(t)))</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of concatMapLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-header">
+        <h3>mergeMap</h3>
+        <button type="button" (click)="runMergeMap()">Run parallel</button>
+      </header>
+      <p>Run requests concurrently and emit as they complete.</p>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">Input: A---B---C|
+Out:   A-B--C--| (overlap)</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">ids$
+  .pipe(mergeMap(id => api(id)))</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of mergeMapLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-header">
+        <h3>combineLatest</h3>
+      </header>
+      <p>React to latest values from multiple streams.</p>
+      <div class="controls">
+        <input
+          type="text"
+          [value]="termValue"
+          (input)="updateTerm($any($event.target).value)"
+          placeholder="Search term"
+        />
+        <select [value]="categoryValue" (change)="updateCategory($any($event.target).value)">
+          @for (category of categories; track category) {
+            <option [value]="category">{{ category }}</option>
+          }
+        </select>
+      </div>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">A: --a----b----|
+B: ----1----2--|
+Out: ----a1-b1-b2|</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">combineLatest([term$, filter$])
+  .pipe(map(([t, f]) => ...))</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of combineLatestLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-header">
+        <h3>exhaustMap</h3>
+        <button type="button" (click)="triggerLogin()">Click login</button>
+      </header>
+      <p>Ignore new clicks until the current request finishes.</p>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">Click: a--b--c---|
+Out:   a------c--| (b ignored)</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">click$
+  .pipe(exhaustMap(() => login()))</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of exhaustMapLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-header">
+        <h3>debounceTime</h3>
+      </header>
+      <p>Wait for silence, then emit the last value.</p>
+      <div class="controls">
+        <input type="text" placeholder="Type to debounce" (input)="updateDebounce($any($event.target).value)" />
+      </div>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">Input: a-b-c----d|
+Out:        ----c---d|</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">input$
+  .pipe(debounceTime(500))</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of debounceLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-header">
+        <h3>throttleTime</h3>
+        <button type="button" (click)="triggerThrottle()">Spam click</button>
+      </header>
+      <p>Emit first click, then ignore for the throttle window.</p>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">Click: a-b-c-d-e|
+Out:   a---c---e|</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">click$
+  .pipe(throttleTime(1000))</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of throttleLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-header">
+        <h3>shareReplay</h3>
+        <button type="button" (click)="runShareReplay()">Run shared request</button>
+      </header>
+      <p>Share and replay the latest API result for new subscribers.</p>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">Source: ---x|
+Sub1:   ---x|
+Sub2:      x| (replayed)</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">api$
+  .pipe(shareReplay(1))</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of shareReplayLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-header">
+        <h3>catchError</h3>
+        <button type="button" (click)="runCatchError()">Run failing request</button>
+      </header>
+      <p>Handle errors and recover with a fallback value.</p>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">Source: --x--#
+Out:    --x--(fallback)|</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">api$
+  .pipe(catchError(() => of(fallback)))</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of catchErrorLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-header">
+        <h3>distinctUntilChanged</h3>
+      </header>
+      <p>Emit only when the value actually changes.</p>
+      <div class="controls">
+        <input type="text" placeholder="Type the same value twice" (input)="updateDistinct($any($event.target).value)" />
+      </div>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">Input: a-a-b-b-c|
+Out:   a---b---c|</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">input$
+  .pipe(distinctUntilChanged())</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of distinctLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-header">
+        <h3>takeUntil</h3>
+        <div class="button-group">
+          <button type="button" (click)="startTakeUntil()">Start</button>
+          <button type="button" (click)="stopTakeUntil()">Stop</button>
+        </div>
+      </header>
+      <p>Complete a stream when another notifier emits.</p>
+      <div class="visual">
+        <div>
+          <h4>Marble</h4>
+          <pre class="marble">Source: 0-1-2-3-4-5-6|
+Stop:         s|
+Out:    0-1-2-3|</pre>
+        </div>
+        <div>
+          <h4>Snippet</h4>
+          <pre class="code">source$
+  .pipe(takeUntil(stop$))</pre>
+        </div>
+      </div>
+      <h4 class="output-title">Output</h4>
+      <div class="logs">
+        @for (log of takeUntilLogs(); track log) {
+          <div class="log">{{ log }}</div>
+        }
+      </div>
+    </article>
+
+    <article class="card upcoming">
+      <header class="card-header">
+        <h3>More operators</h3>
+        <a
+          class="pill-link"
+          href="https://rxjs.dev/guide/testing/marble-testing"
+          target="_blank"
+          rel="noopener"
+        >
+          Marble Testing Guide
+        </a>
+      </header>
+      <p>Planned: debounceTime, throttleTime, shareReplay, catchError, retry.</p>
+      <p class="hint">Scope left open for more interview operators.</p>
+    </article>
+  </div>
+</section>

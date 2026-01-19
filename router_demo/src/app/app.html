@@ -1,0 +1,22 @@
+<header class="top-bar">
+  <div class="brand">Angular Router Demo</div>
+  <nav class="main-nav">
+    <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/about" routerLinkActive="active">About + Resolver</a>
+    <a routerLink="/users" routerLinkActive="active">Users (Auth Guard)</a>
+    <a routerLink="/admin" routerLinkActive="active">Admin (Lazy + Match)</a>
+    <a routerLink="/legacy" routerLinkActive="active">Legacy (Load Component)</a>
+  </nav>
+  <div class="auth">
+    <span class="status">
+      Status: {{ isLoggedIn() ? 'Logged in (' + role() + ')' : 'Guest' }}
+    </span>
+    <button type="button" (click)="loginUser()">Login User</button>
+    <button type="button" (click)="loginAdmin()">Login Admin</button>
+    <button type="button" (click)="logout()">Logout</button>
+  </div>
+</header>
+
+<main class="page">
+  <router-outlet></router-outlet>
+</main>

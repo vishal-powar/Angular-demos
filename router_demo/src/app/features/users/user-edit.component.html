@@ -1,0 +1,27 @@
+@if (user) {
+  <section class="edit">
+    <h3>Edit {{ user.name }}</h3>
+
+    <label>
+      Name
+      <input type="text" [(ngModel)]="formModel.name" />
+    </label>
+
+    <label>
+      Role
+      <input type="text" [(ngModel)]="formModel.role" />
+    </label>
+
+    <label>
+      Bio
+      <textarea rows="3" [(ngModel)]="formModel.bio"></textarea>
+    </label>
+
+    <div class="actions">
+      <button type="button" (click)="save()">Save</button>
+      <a routerLink="/users">Cancel</a>
+    </div>
+  </section>
+} @else {
+  <p>User not found. Return to the <a routerLink="/users">list</a>.</p>
+}

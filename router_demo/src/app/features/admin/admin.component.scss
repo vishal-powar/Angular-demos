@@ -1,0 +1,14 @@
+.admin {
+  display: grid;
+  gap: 1rem;
+}
+
+nav {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.active {
+  font-weight: 600;
+  text-decoration: underline;
+}

@@ -1,0 +1,14 @@
+<section class="login">
+  <h1>Login</h1>
+  <p>Use these buttons to simulate authentication for guard demos.</p>
+
+  <div class="actions">
+    <button type="button" (click)="loginAsUser()">Login as User</button>
+    <button type="button" (click)="loginAsAdmin()">Login as Admin</button>
+  </div>
+
+  <p class="hint">
+    After login you will be redirected to: <strong>{{ redirectUrl }}</strong>
+  </p>
+  <a routerLink="/home">Back to Home</a>
+</section>

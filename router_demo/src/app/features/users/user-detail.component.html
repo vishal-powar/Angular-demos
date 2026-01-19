@@ -1,0 +1,10 @@
+@if (user$ | async; as user) {
+  <section class="detail">
+    <h3>{{ user.name }}</h3>
+    <p><strong>Role:</strong> {{ user.role }}</p>
+    <p>{{ user.bio }}</p>
+    <a [routerLink]="['/users', user.id, 'edit']">Edit user</a>
+  </section>
+} @else {
+  <p>User not found. Return to the <a routerLink="/users">list</a>.</p>
+}

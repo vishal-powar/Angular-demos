@@ -1,0 +1,12 @@
+<div class="log-panel">
+  <div class="title">{{ title }}</div>
+  @if (entries.length === 0) {
+    <p class="empty">No logs yet.</p>
+  } @else {
+    <ul>
+      @for (entry of entries; track entry) {
+        <li>{{ entry }}</li>
+      }
+    </ul>
+  }
+</div>
