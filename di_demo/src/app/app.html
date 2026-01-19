@@ -1,0 +1,103 @@
+<main class="page">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Angular Dependency Injection</p>
+      <h1>{{ appName }}</h1>
+      <p>
+        Constructor injection, <code>inject()</code>, mock APIs, and multiple
+        interceptors working together.
+      </p>
+    </div>
+    <div class="meta">
+      <div class="chip">Mock API: {{ featureFlags.useMockApi ? 'on' : 'off' }}</div>
+      <div class="chip">Storage: {{ storageType }}</div>
+    </div>
+  </header>
+
+  <section class="card">
+    <h2>Mock API + Multiple Interceptors</h2>
+    <p class="subtle">
+      Requests flow through <strong>AuthHeaderInterceptor</strong> →
+      <strong>TimingInterceptor</strong> →
+      <strong>MockApiInterceptor</strong>.
+    </p>
+    <div class="actions">
+      <button type="button" (click)="loadTasks()">Load tasks</button>
+      <button type="button" (click)="recordAudit()">Record audit</button>
+      <button type="button" (click)="recordMetric()">Track metric</button>
+      <button type="button" (click)="savePreference()">Save preference</button>
+    </div>
+    @if (loading()) {
+      <p class="status">Loading tasks...</p>
+    }
+    @if (error()) {
+      <p class="status error">{{ error() }}</p>
+    }
+    @if (tasks().length) {
+      <ul class="tasks">
+        @for (task of tasks(); track task.id) {
+          <li>
+            <strong>{{ task.title }}</strong>
+            <span>{{ task.owner }}</span>
+            <span class="pill">{{ task.status }}</span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="status">No tasks loaded yet.</p>
+    }
+  </section>
+
+  <section class="grid">
+    <article class="card">
+      <h2>Constructor Injection</h2>
+      <p class="subtle">
+        The app component receives <code>TaskApiService</code>,
+        <code>AuditService</code>, and <code>UserPreferencesService</code> via its
+        constructor.
+      </p>
+      <div class="code-pill">constructor(taskApi, audit, preferences)</div>
+    </article>
+
+    <article class="card">
+      <h2><code>inject()</code> API</h2>
+      <p class="subtle">
+        <code>MetricsService</code> and <code>FeatureToggleService</code> resolve
+        dependencies using the <code>inject()</code> function.
+      </p>
+      <div class="code-pill">const metrics = inject(MetricsService)</div>
+    </article>
+  </section>
+
+  <section class="grid">
+    <article class="card">
+      <h2>Provider Variations</h2>
+      <ul class="list">
+        <li><strong>useValue</strong>: <code>APP_NAME</code>, <code>FEATURE_FLAGS</code></li>
+        <li><strong>useFactory</strong>: <code>APP_CONFIG</code> composed from tokens</li>
+        <li><strong>useExisting</strong>: <code>APP_LOGGER</code> → <code>LoggerService</code></li>
+        <li><strong>useClass</strong>: feature area overrides logger</li>
+        <li><strong>Optional</strong>: <code>LOCAL_STORAGE</code> fallback</li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h2>App Config (factory)</h2>
+      <div class="kv">
+        @for (item of configItems(); track item.label) {
+          <div>
+            <span>{{ item.label }}</span>
+            <strong>{{ item.value }}</strong>
+          </div>
+        }
+      </div>
+    </article>
+  </section>
+
+  <section class="card">
+    <h2>Root Logger</h2>
+    <app-logger-panel title="Root Logger"></app-logger-panel>
+  </section>
+
+  <app-feature-area></app-feature-area>
+</main>

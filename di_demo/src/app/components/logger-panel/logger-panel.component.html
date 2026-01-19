@@ -1,0 +1,16 @@
+<div class="panel">
+  <header>
+    <h3>{{ title }}</h3>
+    <button type="button" (click)="clear()">Clear</button>
+  </header>
+
+  @if (activeLogger.entries().length === 0) {
+    <p class="empty">No log entries yet.</p>
+  } @else {
+    <ul>
+      @for (entry of activeLogger.entries(); track $index) {
+        <li>{{ entry }}</li>
+      }
+    </ul>
+  }
+</div>

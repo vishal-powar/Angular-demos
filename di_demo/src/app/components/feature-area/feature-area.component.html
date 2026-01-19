@@ -1,0 +1,27 @@
+<section class="card feature">
+  <header>
+    <h2>Component-level Provider Override</h2>
+    <p>
+      This component provides its own <code>LoggerService</code> via
+      <code>useClass</code>, while still accessing the parent instance with
+      <code>skipSelf</code>.
+    </p>
+  </header>
+
+  <div class="actions">
+    <button type="button" (click)="logFeature()">Log feature event</button>
+    <button type="button" (click)="logParent()" [disabled]="!parentLogger">
+      Log in parent
+    </button>
+  </div>
+
+  <div class="logs">
+    <app-logger-panel title="Feature Logger (useClass)"></app-logger-panel>
+    @if (parentLogger) {
+      <app-logger-panel
+        title="Parent Logger (skipSelf)"
+        [logger]="parentLogger"
+      ></app-logger-panel>
+    }
+  </div>
+</section>

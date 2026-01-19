@@ -1,0 +1,38 @@
+.panel {
+  border: 1px solid #d7d7e0;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #fff;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.empty {
+  color: #666;
+  margin: 0;
+}
+
+button {
+  border: 1px solid #c7c7d6;
+  border-radius: 8px;
+  padding: 0.25rem 0.75rem;
+  background: #f8f8ff;
+}
